@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0f172a" />
+    <title>GiukaKash</title>
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <h1>GiukaKash</h1>
+        <button id="settingsBtn" class="icon-btn" aria-label="Impostazioni">⚙️</button>
+      </header>
+
+      <main>
+        <section id="home" class="view active">
+          <div class="card hero">
+            <p class="muted">Patrimonio totale</p>
+            <h2 id="totalWealth">€0,00</h2>
+          </div>
+
+          <div class="section-head">
+            <h3>I miei conti</h3>
+          </div>
+          <div id="homeAccounts" class="card-list"></div>
+
+          <div class="section-head">
+            <h3>Azioni rapide</h3>
+          </div>
+          <div class="quick-actions">
+            <button class="primary" data-quick-type="income">Entrata</button>
+            <button class="danger" data-quick-type="expense">Uscita</button>
+            <button data-quick-type="transfer">Trasferimento</button>
+          </div>
+        </section>
+
+        <section id="movements" class="view">
+          <div class="card filters">
+            <div class="grid-2">
+              <label>Conto
+                <select id="filterAccount"></select>
+              </label>
+              <label>Tipo
+                <select id="filterType">
+                  <option value="all">Tutti</option>
+                  <option value="income">Entrata</option>
+                  <option value="expense">Uscita</option>
+                  <option value="transfer">Trasferimento</option>
+                </select>
+              </label>
+              <label>Categoria
+                <select id="filterCategory"></select>
+              </label>
+              <label>Periodo
+                <select id="filterPeriod">
+                  <option value="all">Tutto</option>
+                  <option value="7">Ultimi 7 giorni</option>
+                  <option value="30">Ultimi 30 giorni</option>
+                  <option value="365">Ultimi 12 mesi</option>
+                </select>
+              </label>
+            </div>
+            <label>Ricerca
+              <input id="filterSearch" type="search" placeholder="Descrizione o categoria" />
+            </label>
+          </div>
+
+          <div class="section-head">
+            <h3>Movimenti</h3>
+            <button id="addMovementBtn" class="small-btn">+ Aggiungi</button>
+          </div>
+          <div id="movementList" class="card-list"></div>
+        </section>
+
+        <section id="stats" class="view">
+          <div class="tabs">
+            <button class="tab active" data-range="month">Mensile</button>
+            <button class="tab" data-range="week">Settimanale</button>
+            <button class="tab" data-range="year">Annuale</button>
+          </div>
+
+          <div class="card">
+            <p class="muted">Andamento patrimonio</p>
+            <canvas id="wealthChart" height="220"></canvas>
+          </div>
+
+          <div class="grid-2 stats-kpis">
+            <div class="card"><p class="muted">Entrate</p><strong id="kpiIncome">€0,00</strong></div>
+            <div class="card"><p class="muted">Uscite</p><strong id="kpiExpense">€0,00</strong></div>
+            <div class="card"><p class="muted">Differenza</p><strong id="kpiDiff">€0,00</strong></div>
+            <div class="card"><p class="muted">Movimenti</p><strong id="kpiCount">0</strong></div>
+          </div>
+
+          <div class="card">
+            <p class="muted">Spese per categoria</p>
+            <div id="expenseByCategory" class="category-bars"></div>
+          </div>
+        </section>
+
+        <section id="accounts" class="view">
+          <div class="section-head">
+            <h3>Conti</h3>
+            <button id="addAccountBtn" class="small-btn">+ Nuovo conto</button>
+          </div>
+          <div id="accountList" class="card-list"></div>
+        </section>
+      </main>
+
+      <nav class="bottom-nav" aria-label="Navigazione principale">
+        <button class="nav-item active" data-view="home">Home</button>
+        <button class="nav-item" data-view="movements">Movimenti</button>
+        <button class="nav-item" data-view="stats">Statistiche</button>
+        <button class="nav-item" data-view="accounts">Conti</button>
+      </nav>
+    </div>
+
+    <dialog id="movementDialog" class="app-dialog">
+      <form id="movementForm" method="dialog">
+        <h3 id="movementDialogTitle">Nuovo movimento</h3>
+        <input type="hidden" id="movementId" />
+        <label>Tipo
+          <select id="movementType" required>
+            <option value="income">Entrata</option>
+            <option value="expense">Uscita</option>
+            <option value="transfer">Trasferimento</option>
+          </select>
+        </label>
+
+        <div id="singleAccountFields">
+          <label>Conto
+            <select id="movementAccount"></select>
+          </label>
+        </div>
+
+        <div id="transferFields" class="grid-2 hidden">
+          <label>Da conto
+            <select id="movementFromAccount"></select>
+          </label>
+          <label>A conto
+            <select id="movementToAccount"></select>
+          </label>
+        </div>
+
+        <label>Importo (€)
+          <input id="movementAmount" type="number" inputmode="decimal" min="0.01" step="0.01" required />
+        </label>
+
+        <label id="categoryLabel">Categoria
+          <select id="movementCategory" required></select>
+        </label>
+
+        <label>Data
+          <input id="movementDate" type="date" required />
+        </label>
+
+        <label>Descrizione (opzionale)
+          <input id="movementDescription" type="text" maxlength="80" placeholder="Es. Spesa supermercato" />
+        </label>
+
+        <div class="dialog-actions">
+          <button type="button" data-close-dialog="movementDialog">Annulla</button>
+          <button class="primary" type="submit">Salva</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="accountDialog" class="app-dialog">
+      <form id="accountForm" method="dialog">
+        <h3 id="accountDialogTitle">Nuovo conto</h3>
+        <input type="hidden" id="accountId" />
+        <label>Nome conto
+          <input id="accountName" type="text" maxlength="40" required />
+        </label>
+        <label>Saldo iniziale (€)
+          <input id="accountInitial" type="number" inputmode="decimal" step="0.01" required />
+        </label>
+        <label>Colore
+          <input id="accountColor" type="color" required />
+        </label>
+        <div class="dialog-actions">
+          <button type="button" data-close-dialog="accountDialog">Annulla</button>
+          <button class="primary" type="submit">Salva</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="categoriesDialog" class="app-dialog">
+      <form id="categoriesForm" method="dialog">
+        <h3>Gestione categorie</h3>
+        <label>Tipo
+          <select id="categoryTypeSelector">
+            <option value="income">Entrata</option>
+            <option value="expense">Uscita</option>
+          </select>
+        </label>
+        <label>Nuova categoria
+          <input id="newCategoryName" type="text" maxlength="30" placeholder="Nome categoria" />
+        </label>
+        <div class="dialog-actions">
+          <button type="button" id="addCategoryBtn">Aggiungi</button>
+          <button type="button" data-close-dialog="categoriesDialog">Chiudi</button>
+        </div>
+        <div id="categoryList" class="simple-list"></div>
+      </form>
+    </dialog>
+
+    <dialog id="settingsDialog" class="app-dialog">
+      <form method="dialog">
+        <h3>Impostazioni</h3>
+        <div class="settings-actions">
+          <button type="button" id="manageCategoriesBtn">Gestisci categorie</button>
+          <button type="button" id="exportBtn">Esporta dati</button>
+          <label class="file-import">
+            Importa dati
+            <input id="importInput" type="file" accept="application/json" />
+          </label>
+        </div>
+        <div class="dialog-actions">
+          <button type="button" data-close-dialog="settingsDialog">Chiudi</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="accountDetailDialog" class="app-dialog">
+      <form method="dialog">
+        <h3 id="accountDetailTitle">Dettaglio conto</h3>
+        <p class="muted" id="accountDetailBalance"></p>
+        <div id="accountDetailMovements" class="simple-list"></div>
+        <div class="dialog-actions">
+          <button type="button" data-close-dialog="accountDetailDialog">Chiudi</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

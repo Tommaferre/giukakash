@@ -1,0 +1,195 @@
+:root {
+  --bg: #f3f5f9;
+  --card: #ffffff;
+  --text: #111827;
+  --muted: #6b7280;
+  --primary: #0f172a;
+  --accent: #2563eb;
+  --danger: #dc2626;
+  --border: #e5e7eb;
+  --radius: 16px;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+#app {
+  max-width: 520px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  padding: env(safe-area-inset-top) 14px calc(84px + env(safe-area-inset-bottom));
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 4px 14px;
+}
+.topbar h1 { margin: 0; font-size: 1.15rem; }
+
+.icon-btn,
+.small-btn,
+button {
+  border: none;
+  border-radius: 12px;
+  background: #e8edf7;
+  color: var(--primary);
+  padding: 9px 12px;
+  font-weight: 600;
+}
+button.primary { background: var(--primary); color: #fff; }
+button.danger { background: #fee2e2; color: var(--danger); }
+button:active { transform: translateY(1px); }
+
+main { display: block; }
+.view { display: none; }
+.view.active { display: block; }
+
+.card,
+.list-item,
+.account-row {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+}
+.hero h2 { margin: 6px 0 0; font-size: 2rem; }
+
+.muted { color: var(--muted); margin: 0; }
+.section-head {
+  margin: 18px 2px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.section-head h3 { margin: 0; font-size: 1rem; }
+
+.card-list { display: grid; gap: 10px; }
+.quick-actions { display: grid; gap: 10px; grid-template-columns: repeat(3, 1fr); }
+
+.balance { font-size: 1.1rem; font-weight: 700; }
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.row small { color: var(--muted); }
+.badge {
+  font-size: 0.75rem;
+  background: #eef2ff;
+  color: #3730a3;
+  border-radius: 999px;
+  padding: 3px 8px;
+}
+.badge.expense { background: #fee2e2; color: #991b1b; }
+.badge.income { background: #dcfce7; color: #166534; }
+.badge.transfer { background: #e0f2fe; color: #0c4a6e; }
+
+.grid-2 { display: grid; gap: 10px; grid-template-columns: 1fr 1fr; }
+.filters { display: grid; gap: 10px; }
+
+label {
+  display: grid;
+  gap: 6px;
+  font-size: 0.9rem;
+}
+input, select {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px;
+  background: #fff;
+  color: var(--text);
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.tab.active { background: var(--primary); color: #fff; }
+
+.stats-kpis strong { font-size: 1.1rem; }
+.category-bars { display: grid; gap: 8px; }
+.category-bar {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 8px;
+  align-items: center;
+}
+.category-bar-track {
+  height: 10px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.category-bar-fill {
+  height: 100%;
+  background: var(--accent);
+}
+
+.bottom-nav {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: min(520px, 100%);
+  background: #fff;
+  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+}
+.nav-item { background: #f3f4f6; }
+.nav-item.active { background: var(--primary); color: #fff; }
+
+.app-dialog {
+  border: none;
+  border-radius: 16px;
+  width: min(460px, 92vw);
+  padding: 0;
+}
+.app-dialog form { padding: 16px; display: grid; gap: 10px; }
+.app-dialog::backdrop { background: rgba(15, 23, 42, 0.45); }
+.dialog-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.hidden { display: none; }
+
+.simple-list { display: grid; gap: 8px; }
+.simple-list .row {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: #fff;
+}
+.settings-actions { display: grid; gap: 8px; }
+.file-import {
+  background: #f3f4f6;
+  border-radius: 12px;
+  padding: 10px;
+}
+.file-import input { margin-top: 8px; }
+
+.account-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+@media (min-width: 700px) {
+  #app { padding-top: 16px; }
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>GiukaKash</title>
+<meta name="description" content="GiukaKash — Gestione personale delle finanze: patrimonio, conti, movimenti e statistiche.">
+<meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b0c0f" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="GiukaKash">
+<script>
+  // Applica subito il tema salvato per evitare un flash del tema sbagliato al caricamento.
+  (function () {
+    try {
+      var t = localStorage.getItem('moneyapp:theme');
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="app"></div>
+
+<nav id="bottom-nav">
+  <button data-navitem="home" class="nav-item">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3z"/></svg>
+    <span>Home</span>
+  </button>
+  <button data-navitem="movements" class="nav-item">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+    <span>Movimenti</span>
+  </button>
+  <button data-navitem="stats" class="nav-item">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M4 20V10h3v10zm6.5 0V4h3v16zm6.5 0v-7h3v7z"/></svg>
+    <span>Statistiche</span>
+  </button>
+  <button data-navitem="accounts" class="nav-item">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M3 6a2 2 0 012-2h13v2H5v1h15v11a2 2 0 01-2 2H5a2 2 0 01-2-2zm14 6.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3z"/></svg>
+    <span>Conti</span>
+  </button>
+</nav>
+
+<div id="modal-root"></div>
+
+<script src="js/db.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/render.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
