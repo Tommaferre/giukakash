@@ -274,8 +274,14 @@ const Render = (() => {
     return CAT_PALETTE[hash % CAT_PALETTE.length];
   }
 
+  function parseDateOnly(value) {
+    if (value instanceof Date) return new Date(value.getFullYear(), value.getMonth(), value.getDate());
+    const [year, month, day] = String(value).slice(0, 10).split('-').map(Number);
+    return new Date(year, month - 1, day);
+  }
+
   function getPeriodRange(period, refDate) {
-    const ref = refDate ? new Date(refDate) : new Date();
+    const ref = refDate ? parseDateOnly(refDate) : new Date();
     const today = DB.isoDate(new Date());
     if (period === 'week') {
       const start = DB.startOfWeek(ref);
@@ -289,13 +295,14 @@ const Render = (() => {
       return { start: DB.isoDate(start), end: DB.isoDate(end), label: `${y}`, isFuture, refCenter: ref };
     } else {
       const start = DB.startOfMonth(ref), end = DB.endOfMonth(ref);
-      const isFuture = (ref.getFullYear() > new Date().getFullYear()) || (ref.getFullYear() === new Date().getFullYear() && ref.getMonth() >= new Date().getMonth());
+      const now = new Date();
+      const isFuture = (ref.getFullYear() > now.getFullYear()) || (ref.getFullYear() === now.getFullYear() && ref.getMonth() > now.getMonth());
       return { start: DB.isoDate(start), end: DB.isoDate(end), label: `${MONTHS[ref.getMonth()]} ${ref.getFullYear()}`, isFuture, refCenter: ref };
     }
   }
 
   function stepPeriod(period, refDate, dir) {
-    const ref = new Date(refDate);
+    const ref = parseDateOnly(refDate);
     if (period === 'week') return DB.isoDate(DB.addDays(ref, dir * 7));
     if (period === 'year') return DB.isoDate(new Date(ref.getFullYear() + dir, 0, 1));
     return DB.isoDate(new Date(ref.getFullYear(), ref.getMonth() + dir, 1));

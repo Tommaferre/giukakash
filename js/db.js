@@ -22,10 +22,10 @@ const DB = (() => {
 
   function defaultData() {
     const accounts = [
-      { id: uid(), name: 'Contanti', color: ACCOUNT_COLORS[0], icon: ACCOUNT_ICONS[0], initialBalance: 32000, archived: false },
-      { id: uid(), name: 'Crédit Agricole', color: ACCOUNT_COLORS[1], icon: ACCOUNT_ICONS[1], initialBalance: 312000, archived: false },
-      { id: uid(), name: 'HYPE', color: ACCOUNT_COLORS[2], icon: ACCOUNT_ICONS[2], initialBalance: 245000, archived: false },
-      { id: uid(), name: 'Unipol', color: ACCOUNT_COLORS[3], icon: ACCOUNT_ICONS[3], initialBalance: 256000, archived: false }
+      { id: uid(), name: 'Contanti', color: ACCOUNT_COLORS[0], icon: ACCOUNT_ICONS[0], initialBalance: 0, archived: false },
+      { id: uid(), name: 'Crédit Agricole', color: ACCOUNT_COLORS[1], icon: ACCOUNT_ICONS[1], initialBalance: 0, archived: false },
+      { id: uid(), name: 'HYPE', color: ACCOUNT_COLORS[2], icon: ACCOUNT_ICONS[2], initialBalance: 0, archived: false },
+      { id: uid(), name: 'Unipol', color: ACCOUNT_COLORS[3], icon: ACCOUNT_ICONS[3], initialBalance: 0, archived: false }
     ];
     return {
       version: 1,
