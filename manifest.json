@@ -1,7 +1,7 @@
 {
   "name": "GiukaKash",
   "short_name": "GiukaKash",
-  "description": "GiukaKash — Gestione personale del patrimonio, dei conti e delle spese.",
+  "description": "GiukaKash — Gestione del patrimonio personale della cappella",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
