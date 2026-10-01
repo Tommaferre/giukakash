@@ -291,7 +291,7 @@ const Render = (() => {
     } else {
       const start = DB.startOfMonth(ref), end = DB.endOfMonth(ref);
       const now = new Date();
-      const isFuture = (ref.getFullYear() > now.getFullYear()) || (ref.getFullYear() === now.getFullYear() && ref.getMonth() > now.getMonth());
+      const isFuture = (ref.getFullYear() > now.getFullYear()) || (ref.getFullYear() === now.getFullYear() && ref.getMonth() >= now.getMonth());
       return { start: DB.isoDate(start), end: DB.isoDate(end), label: `${MONTHS[ref.getMonth()]} ${ref.getFullYear()}`, isFuture, refCenter: ref };
     }
   }
