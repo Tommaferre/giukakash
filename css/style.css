@@ -208,10 +208,33 @@ button {
   border: 1px solid var(--border); background: var(--surface);
 }
 .filter-row { display: flex; gap: 6px; padding: 0 20px 14px; overflow: visible; }
-.filter-row select {
-  flex: 1 1 0; min-width: 0; padding: 8px 6px; border-radius: 999px;
-  border: 1px solid var(--border); background: var(--surface); font-size: 0.82rem;
-  max-width: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+.filter-menu {
+  position: relative; flex: 1 1 0; min-width: 0;
+}
+.filter-menu summary {
+  display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  padding: 8px 20px 8px 6px; border: 1px solid var(--border); border-radius: 999px;
+  background: var(--surface); color: var(--text); font-size: 0.82rem; cursor: pointer;
+  list-style: none;
+}
+.filter-menu summary::-webkit-details-marker { display: none; }
+.filter-menu summary::after {
+  content: ''; position: absolute; top: 50%; right: 8px; width: 6px; height: 6px;
+  border-right: 1.5px solid var(--text-secondary); border-bottom: 1.5px solid var(--text-secondary);
+  transform: translateY(-65%) rotate(45deg); pointer-events: none;
+}
+.filter-menu[open] summary::after { transform: translateY(-25%) rotate(225deg); }
+.filter-options {
+  position: absolute; z-index: 10; top: calc(100% + 6px); left: 0; min-width: 100%;
+  padding: 5px; border: 1px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--surface); box-shadow: 0 8px 24px rgba(16, 24, 40, 0.14);
+}
+.filter-options button {
+  display: block; width: 100%; padding: 8px 9px; border-radius: 7px;
+  background: transparent; color: var(--text); text-align: left; font-size: 0.8rem;
+  white-space: nowrap;
+}
+.filter-options button.selected { background: var(--accent-soft); color: var(--accent-solid); font-weight: 700;
 }
 
 .movements-list {

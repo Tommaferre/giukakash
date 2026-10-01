@@ -104,20 +104,16 @@ const Render = (() => {
         <input type="search" id="search-input" placeholder="Cerca movimenti..." value="${escapeHtml(filters.q || '')}">
       </div>
       <div class="filter-row">
-        <select id="f-type">
-          <option value="all" ${filters.type==='all'?'selected':''}>Tutti i tipi</option>
-          <option value="income" ${filters.type==='income'?'selected':''}>Entrate</option>
-          <option value="expense" ${filters.type==='expense'?'selected':''}>Uscite</option>
-          <option value="transfer" ${filters.type==='transfer'?'selected':''}>Trasferimenti</option>
-        </select>
-        <select id="f-account">
-          <option value="all">Tutti i conti</option>
-          ${accounts.map(a => `<option value="${a.id}" ${filters.account===a.id?'selected':''}>${escapeHtml(a.name)}</option>`).join('')}
-        </select>
-        <select id="f-category">
-          <option value="all">Tutte le categorie</option>
-          ${[...DB.getCategories('income'), ...DB.getCategories('expense')].filter((v,i,arr)=>arr.indexOf(v)===i).map(c => `<option value="${escapeHtml(c)}" ${filters.category===c?'selected':''}>${escapeHtml(c)}</option>`).join('')}
-        </select>
+        ${filterMenu('type', filters.type, 'Tutti i tipi', [
+          ['all', 'Tutti i tipi'], ['income', 'Entrate'], ['expense', 'Uscite'], ['transfer', 'Trasferimenti']
+        ])}
+        ${filterMenu('account', filters.account, 'Tutti i conti', [
+          ['all', 'Tutti i conti'], ...accounts.map(a => [a.id, a.name])
+        ])}
+        ${filterMenu('category', filters.category, 'Tutte le categorie', [
+          ['all', 'Tutte le categorie'], ...[...DB.getCategories('income'), ...DB.getCategories('expense')]
+            .filter((v,i,arr)=>arr.indexOf(v)===i).map(c => [c, c])
+        ])}
       </div>
       <div class="movements-list">
         ${Object.keys(grouped).length ? Object.entries(grouped).map(([date, list]) => `
@@ -127,6 +123,16 @@ const Render = (() => {
           </div>`).join('') : emptyState('Nessun movimento', 'Prova a modificare i filtri o aggiungi un nuovo movimento.')}
       </div>
     </div>`;
+  }
+
+  function filterMenu(name, selected, fallbackLabel, options) {
+    const selectedOption = options.find(([value]) => value === selected) || options[0];
+    return `<details class="filter-menu">
+      <summary title="${escapeHtml(selectedOption[1])}">${escapeHtml(selectedOption[1])}</summary>
+      <div class="filter-options">
+        ${options.map(([value, label]) => `<button type="button" data-filter-name="${name}" data-filter-value="${escapeHtml(value)}" ${value === selected ? 'class="selected"' : ''}>${escapeHtml(label)}</button>`).join('')}
+      </div>
+    </details>`;
   }
 
   function filterTransactions(filters) {

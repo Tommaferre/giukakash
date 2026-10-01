@@ -350,6 +350,13 @@ const Theme = (() => {
     const delAcc = e.target.closest('[data-delete-account]');
     if (delAcc) { deleteAccountConfirmed(delAcc.dataset.deleteAccount); return; }
 
+    const filterOption = e.target.closest('[data-filter-name]');
+    if (filterOption) {
+      state.movementFilters[filterOption.dataset.filterName] = filterOption.dataset.filterValue;
+      renderRoute();
+      return;
+    }
+
     const periodTab = e.target.closest('[data-period]');
     if (periodTab) {
       state.statsPeriod = periodTab.dataset.period;
