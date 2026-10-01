@@ -2,7 +2,7 @@
    sw.js — cache dell'app shell per funzionamento offline
    ============================================================ */
 
-const CACHE_NAME = 'moneyapp-cache-v2';
+const CACHE_NAME = 'moneyapp-cache-v3';
 const APP_SHELL = [
   './',
   './index.html',
