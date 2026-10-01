@@ -13,12 +13,7 @@ const CATEGORY_ICONS = {
 };
 function catIcon(name) { return CATEGORY_ICONS[name] || '•'; }
 
-const BRAND_LOGO = `<svg viewBox="0 0 32 32" width="30" height="30" class="brand-logo" aria-hidden="true">
-  <rect width="32" height="32" rx="8" fill="#16a34a"/>
-  <rect x="7" y="18" width="4.7" height="7" rx="1.6" fill="#fff"/>
-  <rect x="13.7" y="14" width="4.7" height="11" rx="1.6" fill="#fff"/>
-  <rect x="20.4" y="10" width="4.7" height="15" rx="1.6" fill="#fff"/>
-</svg>`;
+const BRAND_LOGO = '<img src="icons/icon-192.png" width="30" height="30" class="brand-logo" alt="">';
 
 const THEME_LABELS = { light: 'Chiaro', dark: 'Scuro', system: 'Automatico (sistema)' };
 
